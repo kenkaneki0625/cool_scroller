@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>Cool Scroller</title>
+  </head>
+  <body>
+    <div class="line-container">
+      <svg width="224" height="1024" viewBox="0 0 224 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M136.75 0C137.542 182.442 96.8045 242.362 76.3365 249.516L8 278.135L125.856 308.541L214 341.631L125.856 396.185L40.6827 432.852L125.856 521.39V668.059L99.1154 696.678L125.856 719.93L58.5096 755.703L214 800.419L40.6827 842.452L125.856 866.599V913.104L147.644 1024" stroke="#FFEF64" stroke-width="5"/>
+        </svg>
+    </div>
+
+    <section class="one">
+      <h1 class="scroll word" data-rate=".4" data-direction="vertical">進撃の巨人</h1>
+    </section>
+
+    <section class="two">
+      <h1 class="scroll" data-rate=".2" data-direction="vertical">エレン・イェーガ</h1>
+      <p>戦え</p>
+    </section>
+
+    <section class="three">
+    </section>
+
+    <script>
+      let path = document.querySelector('path')
+      let pathLength = path.getTotalLength()
+
+      path.style.strokeDasharray = pathLength + ' ' + pathLength;
+      path.style.strokeDashoffset = pathLength;
+
+      window.addEventListener('scroll', () => {
+        var scrollPercentage = (document.documentElement.scrollTop + document.body.scrollTop) / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+        var drawLength = pathLength * scrollPercentage;
+        path.style.strokeDashoffset = pathLength - drawLength;
+
+        const target = document.querySelectorAll('.scroll');
+
+        var index = 0, length = target.length;
+        for(index; index<length; index++) {
+          var pos = window.pageYOffset * target[index].dataset.rate;
+          if(target[index].dataset.direction === 'vertical') {
+            target[index].style.transform = 'translate3d(0px, '+pos+'px, 0px)';
+          }else{
+            var posX = window.pageYOffset * target[index].dataset.ratex;
+            var posY = window.pageYOffset * target[index].dataset.ratey;
+
+            target[index].style.transform = 'translate3d('+posX+'px, '+posY+ 'px, 0px)';
+
+          }
+        }
+
+      })
+
+    </script>
+  </body>
+</html>
